@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>hdfs – The HTML Presentation</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Title slide -->
+			<div class="slides">
+
+				<section id="transitions">
+					<h2>Transition Styles</h2>
+					<p>
+						Please select from different transitions:<br>
+						<a href="?transition=none#/transitions">None</a> -
+						<a href="?transition=fade#/transitions">Fade</a> -
+						<a href="?transition=slide#/transitions">Slide</a> -
+						<a href="?transition=convex#/transitions">Convex</a> -
+						<a href="?transition=concave#/transitions">Concave</a> -
+						<a href="?transition=zoom#/transitions">Zoom</a>
+					</p>
+				</section>
+
+				<section id="themes">
+					<h2>Themes</h2>
+					<p>
+						Please select from a few themes built in: <br>
+						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
+						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
+					</p>
+				</section>
+
+				<section>
+					<h1>Hadoop Distributed File System</h1>
+					<p>
+						<small>Created by <br /><br />
+
+							<a href="http://inbytes.in">Ganesh Thakur</a> / @dx<br />
+							<a href="http://inbytes.in">Prakash Pandey</a> / @pcp<br />
+							<a href="http://inbytes.in">Viresh Dhawan</a> / @vd<br />
+						</small>
+					</p>
+				</section>
+
+				<!-- Outline -->
+				<section>
+						<h2>OUTLINE</h2><br /><br />
+						<ul>
+							<li>Basic Features: HDFS</li><br /><br />
+							<li>Architecture</li><br /><br />
+							<li>Data Organisation</li><br /><br />
+						</ul>
+				</section>
+
+				<!-- Basic Features of hdfs -->
+				<section>
+					<section>
+						<h2>Basic Features: HDFS</h2><br /><br />
+					</section>
+					<section>
+						<ul>
+							<li>Highly fault-tolerant</li><br />
+							<li>High throughput</li><br />
+							<li>Suitable for applications with large data sets</li><br />
+							<li>Streaming access to file system data</li><br />
+							<li>Can be built out of commodity hardware</li><br />
+						</ul>
+					</section>
+				</section>
+
+				<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Fault tolerance</h2><br /><br />
+					</section>
+					<section>
+						<ul>
+							<li>A HDFS instance may consist of thousands of server machines, each storing part of the file system’s data.</li><br />
+							<li>Since we have huge number of components and that each component has non-trivial probability of failure means that there is always some component that is non-functional</li><br />
+							<li>Detection of faults and quick, automatic recovery from them is a core architectural goal of HDFS</li><br />
+						</ul>
+					</section>
+				</section>
+
+				<!-- Basic Features of hdfs -->
+				<section>
+					<section>
+						<h2>Data Characteristics</h2><br /><br />
+					</section>
+					<section>
+						<ul>
+							<li>Streaming data access</li><br />
+							<li>Applications need streaming access to data</li><br />
+							<li>Batch processing rather than interactive user access</li><br />
+							<li>Large data sets and files: gigabytes to terabytes size</li><br />
+							<li>High aggregate data bandwidth</li><br />
+							<li>Scale to hundreds of nodes in a cluster</li><br />
+							<li>Tens of millions of files in a single instance</li><br />
+							<br />
+						</ul>
+					</section>
+				</section>
+
+				<section data-background="#b5533c" data-background-transition="zoom">
+					<section>
+						<h2>Architecture</h2><br /><br />
+					</section>
+					 <section>
+					 	<h2>Namenode and Datanodes</h2><br /><br />
+						<ul>
+							<li>Master/slave architecture</li><br />
+							<li>HDFS cluster consists of a single Namenode, a master server that manages the file system namespace and regulates access to files by clients</li><br />
+							<li>There are a number of DataNodes usually one per node in a cluster</li><br />
+							<br />
+						</ul>
+					</section><br />
+					<section>
+						<ul>
+							<li>The DataNodes manage storage attached to the nodes that they run on</li><br />
+							<li>HDFS exposes a file system namespace and allows user data to be stored in files</li><br />
+							<li>A file is split into one or more blocks and set of blocks are stored in DataNodes</li><br />
+							<li>DataNodes: serves read, write requests, performs block creation, deletion, and replication upon instruction from Namenode</li><br>
+							<br />
+						</ul>
+					</section>
+				</section>
+
+				<section ><br />
+					<section>
+						<h2>HDFS Architecture</h2>
+					</section>
+					
+					<section data-background="hdfs%20arch.png" data-background-size="1000px">
+						
+					</section>
+				</section>
+
+				<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>File system Namespace</h2><br /><br />
+					</section>
+					<section>
+						
+					<ul>
+	<li>Hierarchical file system with directories and files</li>
+	<li>Create, remove, move, rename etc.</li>
+	<li>Namenode maintains the file system</li>
+	<li>Any meta information changes to the file system recorded by the Namenode.</li>
+	<li>An application can specify the number of replicas of the file needed: replication factor of the file. This information is stored in the Namenode.</li>
+</ul>
+					</section>
+				</section>
+				</section>
+
+
+
+				<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Replica Placement</h2><br /><br />
+					</section>
+					<section>
+						 <ul>
+	<li>The placement of the replicas is critical to HDFS reliability and performance.</li>
+	<li>Optimizing replica placement distinguishes HDFS from other distributed file systems.</li>
+	<li>Rack-aware replica placement: </li>
+	<li>Goal: improve reliability, availability and network bandwidth utilization</li>
+	<li>Research topic</li>
+	<li>Many racks, communication between racks are through switches</li>
+</ul>
+					</section><br>
+					<section>
+					<ul>
+	<li>Network bandwidth between machines on the same rack is greater than those in different racks.</li>
+	<li>Namenode determines the rack id for each DataNode.</li>
+	<li>Replicas are typically placed on unique racks </li>
+	<li>Simple but non-optimal</li>
+	<li>Writes are expensive</li>
+	<li>Replication factor is 3</li>
+	<li>Another research topic?</li>
+	<li>Replicas are placed: one on a node in a local rack, one on a different node in the local rack and one on a node in a different rack.</li>
+	<li>1/3 of the replica on a node, 2/3 on a rack and 1/3 distributed evenly across remaining racks.</li>
+</ul>
+</section>
+				</section>
+				<!-- FAult Tolereance -->
+
+<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Filesystem Metadata</h2><br /><br />
+					</section>
+					<section>
+						 <ul>
+	<li>The HDFS namespace is stored by Namenode.</li>
+	<li>Namenode uses a transaction log called the EditLog to record every change that occurs to the filesystem meta data.</li>
+	<li>For example, creating a new file.</li>
+	<li>Change replication factor of a file</li>
+	<li>EditLog is stored in the Namenode’s local filesystem</li>
+	<li>Entire filesystem namespace including mapping of blocks to files and file system properties is stored in a file FsImage. Stored in Namenode’s local filesystem</li>
+</ul>
+					</section>
+				</section>
+				<!-- FAult Tolereance -->
+
+				<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Namenode</h2><br /><br />
+					</section>
+					<section>
+						 <ul>
+	<li>Keeps image of entire file system namespace and file Blockmap in memory.</li>
+	<li>4GB of local RAM is sufficient to support the above data structures that represent the huge number of files and directories.</li>
+	<li>When the Namenode starts up it gets the FsImage and Editlog from its local file system, update FsImage with EditLog information and then stores a copy of the FsImage on the filesytstem as a checkpoint.</li>
+	<li>Periodic checkpointing is done. So that the system can recover back to the last checkpointed state in case of a crash.</li>
+</ul>
+						 
+					</section>
+				</section>
+				<!-- FAult Tolereance -->
+
+				<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Datanode</h2><br /><br />
+					</section>
+					<section>
+						 <ul>
+	<li>A Datanode stores data in files in its local file system.</li>
+	<li>Datanode has no knowledge about HDFS filesystem</li>
+	<li>It stores each block of HDFS data in a separate file.</li>
+	<li>Datanode does not create all files in the same directory.</li>
+	<li>It uses heuristics to determine optimal number of files per directory and creates directories appropriately: </li>
+	<li>Research issue?</li>
+	<li>When the filesystem starts up it generates a list of all HDFS blocks and send this report to Namenode: Blockreport.</li>
+</ul>
+					</section>
+				</section>
+				<!-- FAult Tolereance -->
+
+
+
+				<section data-background="#b5533c" data-background-transition="zoom">
+					<h2>Data Organization</h2>
+				</section>
+<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Data Blocks</h2><br /><br />
+					</section>
+					<section>
+						 <ul>
+	<li>HDFS support write-once-read-many with reads at streaming speeds.</li>
+	<li>A typical block size is 64MB (or even 128 MB).</li>
+	<li>A file is chopped into 64MB chunks and stored</li>
+</ul>
+					</section>
+				</section>
+				<!-- FAult Tolereance -->
+
+				<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Staging</h2><br /><br />
+					</section>
+					<section>
+						 <ul>
+	<li>A client request to create a file does not reach Namenode immediately.</li>
+	<li>HDFS client caches the data into a temporary file. When the data reached a HDFS block size the client contacts the Namenode.</li>
+	<li>Namenode inserts the filename into its hierarchy and allocates a data block for it.</li>
+	<li>The Namenode responds to the client with the identity of the Datanode and the destination of the replicas (Datanodes) for the block.</li>
+	<li>Then the client flushes it from its local memory.</li>
+</ul>
+					</section>
+				</section>
+				<!-- FAult Tolereance -->
+
+				<!-- FAult Tolereance -->
+				<section>
+					<section>
+						<h2>Replication Pipelining</h2><br /><br />
+					</section>
+					<section>
+						<ul>
+	<li>When the client receives response from Namenode, it flushes its block in small pieces (4K)  to the first replica, that in turn copies it to the next replica and so on.</li>
+	<li>Thus data is pipelined from Datanode to the next</li>
+</ul>
+					</section>
+				</section>
+				<!-- FAult Tolereance -->
+
+				<section >
+					<h1>References</h1>
+					<p>The Hadoop Distributed File System: Architecture and Design by Apache Foundation Inc</p>
+				</section>
+
+
+				<section style="text-align: left;">
+					<h1>THANK YOU</h1>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
